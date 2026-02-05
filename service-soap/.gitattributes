@@ -1,0 +1,36 @@
+*.html linguist-vendored
+*.htm linguist-vendored
+
+
+templates/** linguist-vendored
+
+
+*.java linguist-detectable
+
+
+*.css linguist-vendored
+*.js linguist-vendored
+*.png linguist-vendored
+*.jpg linguist-vendored
+*.jpeg linguist-vendored
+*.gif linguist-vendored
+*.svg linguist-vendored
+
+
+*.yml linguist-vendored
+*.yaml linguist-vendored
+*.properties linguist-vendored
+*.xml linguist-vendored
+*.json linguist-vendored
+*.md linguist-vendored
+*.txt linguist-vendored
+*.sql linguist-vendored
+
+target/ linguist-vendored
+build/ linguist-vendored
+*.class linguist-vendored
+*.jar linguist-vendored
+*.war linguist-vendored
+*.ear linguist-vendored
+
+src/main/resources/** linguist-vendored
