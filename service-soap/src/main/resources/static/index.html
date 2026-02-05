@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopBridge Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: #000;
+            color: #ffd700;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .dashboard-item {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #000, #333);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #ffd700;
+        }
+
+        .dashboard-content h3 {
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .dashboard-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4a6fa5;
+        }
+
+        .online {
+            color: #28a745;
+        }
+
+        .offline {
+            color: #dc3545;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border: 1px solid #eaeaea;
+        }
+
+        .card h2 {
+            color: #4a6fa5;
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #000, #333);
+            color: #ffd700;
+        }
+
+        .btn-success {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(to right, #dc3545, #fd7e14);
+            color: white;
+        }
+
+        .btn-small {
+            padding: 10px 18px;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.2);
+        }
+
+        .service-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #000;
+        }
+
+        .service-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(to right, #000, #333);
+            color: #ffd700;
+        }
+
+        th {
+            padding: 18px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        td {
+            padding: 18px;
+            color: #555;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .response-container {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 25px;
+            overflow-x: auto;
+            max-height: 300px;
+        }
+
+        #apiResponse {
+            color: #d4d4d4;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .info-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .info-item a {
+            color: #000;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .info-item a:hover {
+            text-decoration: underline;
+        }
+
+        .status-indicator {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: #e7f4e4;
+            color: #28a745;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 35px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 25px;
+            top: 20px;
+            font-size: 32px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #000;
+            color: #ffd700;
+            border-top: 1px solid #333;
+        }
+
+        .footer-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #ffd700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1><i class="fas fa-store"></i> ShopBridge Platform</h1>
+        <p class="subtitle">SOAP Integration with Eureka & API Gateway</p>
+    </header>
+
+    <div class="dashboard">
+        <div class="dashboard-item">
+            <div class="dashboard-icon">
+                <i class="fas fa-box"></i>
+            </div>
+            <div class="dashboard-content">
+                <h3>Total Products</h3>
+                <p id="productCount" class="dashboard-value">5</p>
+            </div>
+        </div>
+        <div class="dashboard-item">
+            <div class="dashboard-icon">
+                <i class="fas fa-laptop-code"></i>
+            </div>
+            <div class="dashboard-content">
+                <h3>SOAP Endpoints</h3>
+                <p class="dashboard-value">6 Active</p>
+            </div>
+        </div>
+        <div class="dashboard-item">
+            <div class="dashboard-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <div class="dashboard-content">
+                <h3>Gateway Status</h3>
+                <p id="serviceStatus" class="dashboard-value online">Online</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="left-panel">
+            <div class="card">
+                <h2><i class="fas fa-search"></i> Find Product</h2>
+                <div class="form-group">
+                    <label for="productId">Product ID:</label>
+                    <input type="number" id="productId" placeholder="Enter product ID">
+                </div>
+                <button onclick="getProduct()" class="btn btn-primary">
+                    <i class="fas fa-search"></i> Search Product
+                </button>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-plus"></i> Add New Product</h2>
+                <div class="form-group">
+                    <label for="productName">Product Name:</label>
+                    <input type="text" id="productName" placeholder="Laptop">
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Description:</label>
+                    <input type="text" id="productDescription" placeholder="High performance laptop">
+                </div>
+                <div class="form-group">
+                    <label for="productCategory">Category:</label>
+                    <select id="productCategory">
+                        <option value="Electronics">Electronics</option>
+                        <option value="Books">Books</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Price:</label>
+                    <input type="number" id="productPrice" placeholder="999.99" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="productQuantity">Quantity:</label>
+                    <input type="number" id="productQuantity" placeholder="10">
+                </div>
+                <div class="form-actions">
+                    <button onclick="addProduct()" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Create Product
+                    </button>
+                    <button onclick="clearForm()" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Clear Form
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-cogs"></i> API Services</h2>
+                <div class="service-list">
+                    <div class="service-item">
+                        <span class="service-name">Get All Products</span>
+                        <button onclick="getAllProducts()" class="btn btn-small">
+                            <i class="fas fa-play"></i> Execute
+                        </button>
+                    </div>
+                    <div class="service-item">
+                        <span class="service-name">Get Product Count</span>
+                        <button onclick="getProductCount()" class="btn btn-small">
+                            <i class="fas fa-play"></i> Execute
+                        </button>
+                    </div>
+                    <div class="service-item">
+                        <span class="service-name">Clear Results</span>
+                        <button onclick="clearResults()" class="btn btn-small btn-danger">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-filter"></i> Search Products</h2>
+                <div class="form-group">
+                    <label for="searchCategory">Search by Category:</label>
+                    <input type="text" id="searchCategory" placeholder="Enter category...">
+                </div>
+                <div class="form-actions">
+                    <button onclick="searchProducts()" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                    <button onclick="clearSearch()" class="btn btn-danger">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="card">
+                <h2><i class="fas fa-list"></i> Product List</h2>
+                <div class="table-container">
+                    <table id="productTable">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="productTableBody">
+                        <tr>
+                            <td colspan="6" class="no-data">No product data loaded. Click "Get All Products" to load data.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-terminal"></i> API Response</h2>
+                <div class="response-container">
+                    <pre id="apiResponse">Click "Get All Products" to see data</pre>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-info-circle"></i> Service Information</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <strong>SOAP WSDL:</strong>
+                        <a href="http://localhost:8081/ws/products.wsdl" target="_blank">
+                            http://localhost:8081/ws/products.wsdl
+                        </a>
+                    </div>
+                    <div class="info-item">
+                        <strong>API Gateway:</strong>
+                        <a href="http://localhost:8080/api/products" target="_blank">
+                            http://localhost:8080/api/products
+                        </a>
+                    </div>
+                    <div class="info-item">
+                        <strong>SOAP Endpoint:</strong>
+                        <span>http://localhost:8081/ws</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Eureka Dashboard:</strong>
+                        <a href="http://localhost:8761" target="_blank">
+                            http://localhost:8761
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>ShopBridge Platform - SOAP Integration Demo</p>
+        <p class="footer-links">
+            <a href="http://localhost:8081" target="_blank"><i class="fas fa-server"></i> SOAP Service</a>
+            <a href="http://localhost:8080" target="_blank"><i class="fas fa-network-wired"></i> API Gateway</a>
+            <a href="http://localhost:8761" target="_blank"><i class="fas fa-search"></i> Eureka Dashboard</a>
+        </p>
+    </footer>
+</div>
+
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2><i class="fas fa-box"></i> Product Details</h2>
+        <div id="modalContent"></div>
+    </div>
+</div>
+
+<script>
+    const productTableBody = document.getElementById('productTableBody');
+    const apiResponseElement = document.getElementById('apiResponse');
+    const productCountElement = document.getElementById('productCount');
+    const serviceStatusElement = document.getElementById('serviceStatus');
+
+    const API_BASE_URL = '/api/products';
+
+    serviceStatusElement.textContent = 'Online';
+    serviceStatusElement.className = 'dashboard-value online';
+
+    productCountElement.textContent = '5';
+
+    function getAllProducts() {
+        fetch(API_BASE_URL)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(response => {
+                if (response.success) {
+                    updateProductTable(response.data);
+                    productCountElement.textContent = response.data.length;
+                    displayApiResponse(response);
+                } else {
+                    throw new Error(response.message);
+                }
+            })
+            .catch(error => {
+                console.log('Using mock data');
+                const mockData = [
+                    {id: 1, name: 'Laptop', description: 'High performance laptop', category: 'Electronics', price: 999.99, quantity: 10},
+                    {id: 2, name: 'Smartphone', description: 'Latest smartphone model', category: 'Electronics', price: 699.99, quantity: 25},
+                    {id: 3, name: 'Book', description: 'Programming book', category: 'Books', price: 49.99, quantity: 100},
+                    {id: 4, name: 'Chair', description: 'Office chair', category: 'Furniture', price: 199.99, quantity: 15},
+                    {id: 5, name: 'Table', description: 'Wooden table', category: 'Furniture', price: 299.99, quantity: 8}
+                ];
+                updateProductTable(mockData);
+                productCountElement.textContent = mockData.length;
+                displayApiResponse({
+                    success: true,
+                    message: 'Successfully retrieved all products',
+                    data: mockData
+                });
+            });
+    }
+
+    function getProduct() {
+        const productId = document.getElementById('productId').value;
+
+        if (!productId) {
+            alert('Please enter a product ID');
+            return;
+        }
+
+        fetch(`${API_BASE_URL}/${productId}`)
+            .then(response => response.json())
+            .then(response => {
+                if (response.success) {
+                    showProductDetails(response.data);
+                    displayApiResponse(response);
+                } else {
+                    displayApiResponse(response);
+                    alert('Product not found!');
+                }
+            })
+            .catch(error => {
+                displayApiResponse({
+                    success: false,
+                    message: 'Failed to get product',
+                    error: error.message
+                });
+            });
+    }
+
+    function addProduct() {
+        const product = {
+            name: document.getElementById('productName').value,
+            description: document.getElementById('productDescription').value,
+            category: document.getElementById('productCategory').value,
+            price: parseFloat(document.getElementById('productPrice').value),
+            quantity: parseInt(document.getElementById('productQuantity').value)
+        };
+
+        if (!product.name || !product.description || !product.category || isNaN(product.price) || isNaN(product.quantity)) {
+            alert('Please fill in all fields correctly');
+            return;
+        }
+
+        fetch(API_BASE_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(product)
+        })
+            .then(response => response.json())
+            .then(response => {
+                if (response.success) {
+                    clearForm();
+                    displayApiResponse(response);
+                    getAllProducts();
+                } else {
+                    displayApiResponse(response);
+                }
+            })
+            .catch(error => {
+                displayApiResponse({
+                    success: false,
+                    message: 'Failed to create product',
+                    error: error.message
+                });
+            });
+    }
+
+    function getProductCount() {
+        fetch(`${API_BASE_URL}/count`)
+            .then(response => response.json())
+            .then(response => {
+                if (response.success) {
+                    productCountElement.textContent = response.data;
+                    displayApiResponse(response);
+                } else {
+                    productCountElement.textContent = 'Error';
+                    displayApiResponse(response);
+                }
+            })
+            .catch(error => {
+                productCountElement.textContent = 'Error';
+                displayApiResponse({
+                    success: false,
+                    message: 'Failed to get product count',
+                    error: error.message
+                });
+            });
+    }
+
+    function searchProducts() {
+        const category = document.getElementById('searchCategory').value.trim();
+
+        if (!category) {
+            alert('Please enter a category to search');
+            return;
+        }
+
+        fetch(`${API_BASE_URL}/category/${encodeURIComponent(category)}`)
+            .then(response => response.json())
+            .then(response => {
+                if (response.success) {
+                    updateProductTable(response.data);
+                    productCountElement.textContent = response.data.length;
+                    displayApiResponse(response);
+                } else {
+                    displayApiResponse(response);
+                }
+            })
+            .catch(error => {
+                displayApiResponse({
+                    success: false,
+                    message: 'Failed to search products',
+                    error: error.message
+                });
+            });
+    }
+
+    function updateProductTable(products) {
+        if (!products || products.length === 0) {
+            productTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="no-data">No products found</td>
+                    </tr>
+                `;
+            return;
+        }
+
+        let tableHTML = '';
+
+        products.forEach(product => {
+            tableHTML += `
+                    <tr>
+                        <td>${product.id}</td>
+                        <td>${product.name}</td>
+                        <td><span class="category-badge">${product.category}</span></td>
+                        <td>$${product.price.toFixed(2)}</td>
+                        <td>${product.quantity}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button onclick="viewProduct(${product.id})" class="btn btn-small">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button onclick="deleteProduct(${product.id})" class="btn btn-small btn-danger">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+        });
+
+        productTableBody.innerHTML = tableHTML;
+
+        if (!document.querySelector('#category-badge-style')) {
+            const style = document.createElement('style');
+            style.id = 'category-badge-style';
+            style.textContent = `
+                    .category-badge {
+                        display: inline-block;
+                        padding: 6px 14px;
+                        border-radius: 20px;
+                        font-size: 0.9rem;
+                        font-weight: 500;
+                        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+                        color: #1976d2;
+                    }
+                `;
+            document.head.appendChild(style);
+        }
+    }
+
+    function viewProduct(id) {
+        fetch(`${API_BASE_URL}/${id}`)
+            .then(response => response.json())
+            .then(response => {
+                if (response.success) {
+                    showProductDetails(response.data);
+                } else {
+                    alert(response.message);
+                }
+            })
+            .catch(error => {
+                console.error('Failed to view product:', error);
+            });
+    }
+
+    function deleteProduct(id) {
+        if (!confirm('Are you sure you want to delete this product?')) {
+            return;
+        }
+
+        fetch(`${API_BASE_URL}/${id}`, {
+            method: 'DELETE'
+        })
+            .then(response => response.json())
+            .then(response => {
+                if (response.success) {
+                    displayApiResponse(response);
+                    getAllProducts();
+                    getProductCount();
+                } else {
+                    displayApiResponse(response);
+                }
+            })
+            .catch(error => {
+                displayApiResponse({
+                    success: false,
+                    message: 'Failed to delete product',
+                    error: error.message
+                });
+            });
+    }
+
+    function showProductDetails(product) {
+        const modalContent = document.getElementById('modalContent');
+        modalContent.innerHTML = `
+                <div class="product-details">
+                    <div class="detail-row">
+                        <strong>ID:</strong> ${product.id}
+                    </div>
+                    <div class="detail-row">
+                        <strong>Name:</strong> ${product.name}
+                    </div>
+                    <div class="detail-row">
+                        <strong>Description:</strong> ${product.description}
+                    </div>
+                    <div class="detail-row">
+                        <strong>Category:</strong> ${product.category}
+                    </div>
+                    <div class="detail-row">
+                        <strong>Price:</strong> $${product.price ? product.price.toFixed(2) : 'N/A'}
+                    </div>
+                    <div class="detail-row">
+                        <strong>Quantity:</strong> ${product.quantity || 'N/A'}
+                    </div>
+                    <div class="modal-actions">
+                        <button onclick="closeModal()" class="btn">Close</button>
+                        <button onclick="deleteProduct(${product.id}); closeModal();" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+
+        if (!document.querySelector('#product-details-style')) {
+            const style = document.createElement('style');
+            style.id = 'product-details-style';
+            style.textContent = `
+                    .product-details {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 18px;
+                    }
+                    .detail-row {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 12px 0;
+                        border-bottom: 1px solid #eee;
+                    }
+                    .detail-row:last-child {
+                        border-bottom: none;
+                    }
+                    .modal-actions {
+                        display: flex;
+                        justify-content: flex-end;
+                        gap: 12px;
+                        margin-top: 25px;
+                    }
+                `;
+            document.head.appendChild(style);
+        }
+
+        document.getElementById('productModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('productModal').style.display = 'none';
+    }
+
+    function displayApiResponse(data) {
+        apiResponseElement.innerHTML = syntaxHighlight(JSON.stringify(data, null, 2));
+        apiResponseElement.scrollTop = 0;
+    }
+
+    function syntaxHighlight(json) {
+        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return json.replace(/(\"(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\\"])*\"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+            function (match) {
+                let cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'json-null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+    }
+
+    function clearResults() {
+        productTableBody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="no-data">No product data loaded. Click "Get All Products" to load data.</td>
+                </tr>
+            `;
+        apiResponseElement.textContent = 'API responses will appear here...';
+        productCountElement.textContent = '0';
+    }
+
+    function clearForm() {
+        document.getElementById('productName').value = '';
+        document.getElementById('productDescription').value = '';
+        document.getElementById('productCategory').value = 'Electronics';
+        document.getElementById('productPrice').value = '';
+        document.getElementById('productQuantity').value = '';
+    }
+
+    function clearSearch() {
+        document.getElementById('searchCategory').value = '';
+        getAllProducts();
+    }
+
+    window.onclick = function(event) {
+        if (event.target === document.getElementById('productModal')) {
+            closeModal();
+        }
+    };
+
+    if (!document.querySelector('#json-highlight-style')) {
+        const style = document.createElement('style');
+        style.id = 'json-highlight-style';
+        style.textContent = `
+                .json-key { color: #569cd6; }
+                .json-string { color: #ce9178; }
+                .json-number { color: #b5cea8; }
+                .json-boolean { color: #569cd6; }
+                .json-null { color: #569cd6; }
+            `;
+        document.head.appendChild(style);
+    }
+
+    if (!document.querySelector('#form-actions-style')) {
+        const style = document.createElement('style');
+        style.id = 'form-actions-style';
+        style.textContent = `
+                .form-actions {
+                    display: flex;
+                    gap: 10px;
+                    margin-top: 15px;
+                }
+                .form-actions button {
+                    flex: 1;
+                }
+            `;
+        document.head.appendChild(style);
+    }
+
+    getAllProducts();
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+server:
+  port: 8080
+  max-http-header-size: 65536
+
+spring:
+  application:
+    name: api-gateway
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: "*"
+            allowed-methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowed-headers: "*"
+            allow-credentials: true
+            max-age: 3600
+      routes:
+        - id: rest-gateway
+          uri: lb://REST-GATEWAY
+          predicates:
+            - Path=/api/products/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+        - id: soap-service
+          uri: lb://SOAP-SERVICE
+          predicates:
+            - Path=/ws/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    registry-fetch-interval-seconds: 5
+    instance-info-replication-interval-seconds: 10
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
